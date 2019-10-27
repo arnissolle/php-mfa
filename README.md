@@ -18,7 +18,28 @@ composer require arnissolle/php-mfa
 ## Usage
 
 ``` php
-// Usage description here
+
+use Arnissolle\MFA\OTP\Auth;
+use Arnissolle\MFA\OTP\Code;
+use Arnissolle\MFA\OTP\Secret;
+
+// Create new secret
+$secret = Secret::create();
+
+// Get the OTP auth URI
+$authUri = Auth::uri($secret, 'jdoe@domain.tld', function(Auth $auth) {
+    $auth->issuer = 'Company Name';
+});
+
+// Get the QR Code
+// Then scan it with app like Google Authenticator
+$qrCodeUrl = Auth::qrCodeUrl($authUri);
+
+// Get code (or use third party app)
+$code = Code::get($secret);
+
+// Verify code (bool)
+$verify = Code::verify($secret, $code);
 ```
 
 ### Testing
