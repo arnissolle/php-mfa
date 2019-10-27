@@ -1,11 +1,7 @@
-# Very short description of the package
-
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/arnissolle/php-mfa.svg?style=flat-square)](https://packagist.org/packages/arnissolle/php-mfa)
 [![Build Status](https://img.shields.io/travis/arnissolle/php-mfa/master.svg?style=flat-square)](https://travis-ci.org/arnissolle/php-mfa)
 [![Quality Score](https://img.shields.io/scrutinizer/g/arnissolle/php-mfa.svg?style=flat-square)](https://scrutinizer-ci.com/g/arnissolle/php-mfa)
 [![Total Downloads](https://img.shields.io/packagist/dt/arnissolle/php-mfa.svg?style=flat-square)](https://packagist.org/packages/arnissolle/php-mfa)
-
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.
 
 ## Installation
 
@@ -14,6 +10,12 @@ You can install the package via composer:
 ```bash
 composer require arnissolle/php-mfa
 ```
+
+### Supported third party Authenticator app
+
+Google | Microsoft | LastPass | Authy
+:-: | :-: | :-: | :-:
+✅ | ✅ | ❓ | ❓
 
 ## Usage
 
