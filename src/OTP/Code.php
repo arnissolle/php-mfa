@@ -52,20 +52,21 @@ class Code
      * @param string $code
      * @param int $discrepancy: This is the allowed time drift in 30 second units (8 means 4 minutes before or after)
      * @param int|null $currentTimeSlice: time slice if we want use other that time()
+     * @param int $codeLength
      * @return bool
      */
-    public static function verify(string $secret, string $code, int $discrepancy = 1, int $currentTimeSlice = null)
+    public static function verify(string $secret, string $code, int $discrepancy = 1, int $currentTimeSlice = null, int $codeLength = 6)
     {
+        if (strlen($code) != $codeLength) {
+            return false;
+        }
+
         if ($currentTimeSlice === null) {
             $currentTimeSlice = floor(time() / 30);
         }
 
-        if (strlen($code) != 6) {
-            return false;
-        }
-
         for ($i = -$discrepancy; $i <= $discrepancy; ++$i) {
-            $calculatedCode = self::get($secret, $currentTimeSlice + $i);
+            $calculatedCode = self::get($secret, $currentTimeSlice + $i, $codeLength);
             if (hash_equals($calculatedCode, $code)) {
                 return true;
             }
