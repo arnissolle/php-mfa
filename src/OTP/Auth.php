@@ -7,6 +7,8 @@ define(__NAMESPACE__ . '\COUNTER_BASED', 'hotp');
 define(__NAMESPACE__ . '\ALGORITHM_SHA1', 'SHA1');
 define(__NAMESPACE__ . '\ALGORITHM_SHA256', 'SHA256');
 define(__NAMESPACE__ . '\ALGORITHM_SHA512', 'SHA512');
+define(__NAMESPACE__ . '\MICROSOFTAPP', 'Microsoft');
+define(__NAMESPACE__ . '\OTHERAPP', 'Other');
 
 /**
  * Class Auth
@@ -21,6 +23,7 @@ class Auth
     public $counter = 0;
     public $period = 30;
     public $digits = 6;
+    public $app = OTHERAPP;
 
     private function __construct() {}
 
@@ -55,10 +58,13 @@ class Auth
             unset($parameters['period']);
         }
 
-        $label = rawurlencode($label);
+        $encoded_label = rawurlencode($label);
         $query_string = http_build_query($parameters);
 
-        return urlencode("otpauth://{$parameters['type']}/{$label}?{$query_string}");
+        if ($parameters['app'] === MICROSOFTAPP)
+            return urlencode("otpauth://{$parameters['type']}/{$parameters['issuer']}:$label?{$query_string}");
+
+        return urlencode("otpauth://{$parameters['type']}/{$encoded_label}?{$query_string}");
     }
 
     /**
